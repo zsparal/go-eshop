@@ -1,0 +1,19 @@
+version: "2"
+sql:
+  - queries: "queries/events.sql"
+    engine: "postgresql"
+    schema: "migrations/"
+    database:
+      uri: "postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/eshop"
+    gen:
+      go:
+        package: "db"
+        out: "../internal/events/db"
+        sql_package: "pgx/v5"
+        overrides:
+          - go_type: github.com/gofrs/uuid.UUID
+            db_type: uuid
+            nullable: false
+          - go_type: github.com/gofrs/uuid.NullUUID
+            db_type: uuid
+            nullable: true
